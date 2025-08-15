@@ -2,6 +2,7 @@
 using ConsoleApplication.HealthcareSystem;
 using ConsoleApplication.WarehouseInventory;
 using ConsoleApplication.SchoolGradingSystem;
+using ConsoleApplication.InventoryRecords;
 
 // Create instances of transaction processors
 var bankProcessor = new BankTransferProcessor();
@@ -99,3 +100,20 @@ catch (Exception ex)
 {
     Console.WriteLine($"An unexpected error occurred: {ex.Message}");
 }
+
+// Inventory Records Integration
+var inventoryApp = new InventoryApp("inventory.json");
+
+// Seed sample data
+inventoryApp.SeedSampleData();
+
+// Save data to file
+inventoryApp.SaveData();
+Console.WriteLine("Data saved to file.");
+
+// Clear in-memory log and load data from file
+inventoryApp.LoadData();
+Console.WriteLine("Data loaded from file.");
+
+// Print all items
+inventoryApp.PrintAllItems();
