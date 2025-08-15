@@ -1,6 +1,7 @@
 ﻿using ConsoleApplication.FinanceManagement;
 using ConsoleApplication.HealthcareSystem;
 using ConsoleApplication.WarehouseInventory;
+using ConsoleApplication.SchoolGradingSystem;
 
 // Create instances of transaction processors
 var bankProcessor = new BankTransferProcessor();
@@ -64,3 +65,37 @@ manager.PrintAllItems(manager.Electronics);
 Console.WriteLine("\nRemoving grocery item with ID 2:");
 manager.RemoveItemById(manager.Groceries, 2);
 manager.PrintAllItems(manager.Groceries);
+
+// School Grading System Integration
+var processor = new StudentResultProcessor();
+
+// File paths
+string inputFilePath = "students.csv";
+string outputFilePath = "report.txt";
+
+try
+{
+    // Read students from file
+    var students = processor.ReadStudentsFromFile(inputFilePath);
+
+    // Write report to file
+    processor.WriteReportToFile(students, outputFilePath);
+
+    Console.WriteLine("Student report generated successfully.");
+}
+catch (FileNotFoundException ex)
+{
+    Console.WriteLine($"Error: {ex.Message}");
+}
+catch (InvalidScoreFormatException ex)
+{
+    Console.WriteLine($"Error: {ex.Message}");
+}
+catch (ConsoleApplication.SchoolGradingSystem.MissingFieldException ex)
+{
+    Console.WriteLine($"Error: {ex.Message}");
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"An unexpected error occurred: {ex.Message}");
+}
